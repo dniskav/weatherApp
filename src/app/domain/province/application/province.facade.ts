@@ -55,6 +55,22 @@ export class ProvinceFacade {
     })
   }
 
+  /**
+   * Elimina una provincia del listado local (sin afectar al backend)
+   * @param id El código de la provincia a eliminar
+   */
+  removeProvince(id: string): void {
+    // Actualizar el estado local eliminando la provincia
+    const currentProvinces = this.provinces()
+    const updatedProvinces = currentProvinces.filter((p) => p.id !== id)
+    this.provinces.set(updatedProvinces)
+
+    // Si la provincia eliminada era la seleccionada, limpiamos la selección
+    if (this.selectedProvince()?.id === id) {
+      this.selectedProvince.set(null)
+    }
+  }
+
   getSelectedProvince() {
     return this.selectedProvince$
   }

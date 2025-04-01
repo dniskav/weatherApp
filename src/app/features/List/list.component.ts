@@ -13,13 +13,14 @@ import { Router } from '@angular/router'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { RippleModule } from 'primeng/ripple'
+import { TooltipModule } from 'primeng/tooltip'
 import { ProvinceFacade } from '../../domain/province/application/province.facade'
 import { Province } from '../../domain/province/model/province.model'
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, RippleModule],
+  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, RippleModule, TooltipModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -76,5 +77,20 @@ export class ListComponent implements OnInit {
 
     // Navegar a la página de detalles
     this.router.navigate(['/details', province.id])
+  }
+
+  /**
+   * Elimina una provincia del listado local
+   * @param event Evento del click
+   * @param id El ID de la provincia a eliminar
+   */
+  deleteProvince(event: Event, id: string): void {
+    // Detener la propagación para evitar que se seleccione la fila
+    event.stopPropagation()
+
+    if (confirm(`¿Estás seguro de que deseas eliminar esta provincia?`)) {
+      // Eliminar la provincia del listado local (solo UI)
+      this.provinceFacade.removeProvince(id)
+    }
   }
 }
