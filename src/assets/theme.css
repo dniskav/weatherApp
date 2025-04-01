@@ -1,0 +1,57 @@
+/* Material UI Inspired Theme for PrimeNG v17+ */
+:root {
+  /* Common */
+  --primary-color: #3b82f6;
+  --text-color: #495057;
+  --text-color-secondary: #6c757d;
+  --primary-color-text: #ffffff;
+  --font-family: Arial, sans-serif;
+  --font-size-root: 12px;
+  --font-weight-normal: 300;
+
+  /* Surface */
+  --surface-ground: #f8f9fa;
+  --surface-section: #ffffff;
+  --surface-card: #ffffff;
+  --surface-overlay: #ffffff;
+  --surface-border: #dee2e6;
+  --surface-hover: #e9ecef;
+
+  /* Focus */
+  --focus-ring: 0 0 0 0.2rem #bfdbfe;
+
+  /* Action States */
+  --highlight-bg: #eff6ff;
+  --highlight-text-color: #1d4ed8;
+
+  /* Component Specific */
+  --button-bg: #3b82f6;
+  --button-text: #ffffff;
+  --button-border: #3b82f6;
+  --button-hover-bg: #2563eb;
+  --button-hover-text: #ffffff;
+  --button-focus-shadow: 0 0 0 0.2rem #bfdbfe;
+
+  /* DataTable Specific */
+  --datatable-header-cell-bg: #e9ecef;
+  --datatable-header-cell-color: #495057;
+  --datatable-header-cell-border-width: 1px;
+  --datatable-header-cell-border-color: #dee2e6;
+  --datatable-header-cell-font-weight: var(--font-weight-normal);
+
+  --datatable-body-cell-bg: #ffffff;
+  --datatable-body-cell-color: #495057;
+  --datatable-body-cell-border-width: 1px;
+  --datatable-body-cell-border-color: #e9ecef;
+
+  --datatable-footer-cell-bg: #f8f9fa;
+  --datatable-footer-cell-color: #6c757d;
+  --datatable-footer-cell-border-width: 1px;
+  --datatable-footer-cell-border-color: #e9ecef;
+
+  /* Miscellaneous */
+  --disabled-bg: #eeeeee;
+  --disabled-text-color: #9e9e9e;
+  --border-radius: 6px;
+  --inline-spacing: 0.75rem;
+}

@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Custom Theme */
+@import 'assets/theme.css';
+
+/* PrimeIcons */
+@import 'primeicons/primeicons.css';
+
+/* Global styles */
+html {
+  font-size: var(--font-size-root);
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface-ground);
+  color: var(--text-color);
+}
+
+* {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
+  box-sizing: border-box;
+}
+
+/* PrimeNG Override Styles */
+.p-component {
+  font-family: var(--font-family);
+  font-size: var(--font-size-root);
+  font-weight: var(--font-weight-normal);
+}
+
+/* DataTable Specific Styles */
+.p-datatable {
+  .p-datatable-thead > tr > th {
+    background-color: var(--datatable-header-cell-bg);
+    color: var(--datatable-header-cell-color);
+    border-width: var(--datatable-header-cell-border-width);
+    border-color: var(--datatable-header-cell-border-color);
+    font-weight: var(--datatable-header-cell-font-weight);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .p-datatable-tbody > tr > td {
+    background-color: var(--datatable-body-cell-bg);
+    color: var(--datatable-body-cell-color);
+    border-width: var(--datatable-body-cell-border-width);
+    border-color: var(--datatable-body-cell-border-color);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .p-datatable-tbody > tr.p-highlight {
+    background-color: var(--highlight-bg);
+    color: var(--highlight-text-color);
+  }
+
+  .p-datatable-tbody > tr:hover {
+    background-color: var(--surface-hover);
+  }
+
+  .p-datatable-footer {
+    background-color: var(--datatable-footer-cell-bg);
+    color: var(--datatable-footer-cell-color);
+    border-width: var(--datatable-footer-cell-border-width);
+    border-color: var(--datatable-footer-cell-border-color);
+    padding: 0.5rem 0.75rem;
+  }
+}
