@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TableModule } from 'primeng/table'
+import { TableModule, TableRowSelectEvent } from 'primeng/table'
 import { Router } from '@angular/router'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { RippleModule } from 'primeng/ripple'
 import { ProvinceFacade } from '../../domain/province/application/province.facade'
+import { Province } from '../../domain/province/model/province.model'
 
 @Component({
   selector: 'app-list',
@@ -21,61 +22,33 @@ export class ListComponent implements OnInit {
   private router = inject(Router)
 
   // Estado local del componente
-  provinces = signal<any[]>([])
+  provinces = signal<Province[]>([])
   loading = signal<boolean>(true)
+
+  // Valores computados
   totalProvinces = computed(() => this.provinces().length)
 
-  constructor() {
-    // Inicializar los valores
-  }
-
   ngOnInit(): void {
-    // Configurar un callback para cuando se carguen las provincias
-    const updateProvinces = () => {
-      const facadeProvinces = this.provinceFacade.provinces$()
-      this.provinces.set(facadeProvinces)
-
-      // Actualizar el estado de carga
-      const isLoading = this.provinceFacade.isLoading$()
-      if (!isLoading && facadeProvinces.length > 0) {
-        this.loading.set(false)
-      }
-    }
-
-    // Verificar estado inicial
-    updateProvinces()
+    // Actualizar el componente cuando cambien las provincias
+    this.provinces.set(this.provinceFacade.provinces$())
+    this.loading.set(this.provinceFacade.isLoading$())
 
     // Cargar las provincias
     this.provinceFacade.loadAllProvinces()
-
-    // Verificar periódicamente hasta tener datos
-    const maxChecks = 20 // Limitar a 20 intentos (10 segundos)
-    let checkCount = 0
-    const checkInterval = setInterval(() => {
-      updateProvinces()
-      checkCount++
-
-      // Detener el intervalo si tenemos datos o alcanzamos el máximo de intentos
-      if (this.provinces().length > 0 || checkCount >= maxChecks) {
-        clearInterval(checkInterval)
-        // Si llegamos al máximo de intentos sin datos, asumimos que no hay provincias
-        if (checkCount >= maxChecks) {
-          this.loading.set(false)
-        }
-      }
-    }, 500)
   }
 
-  onRowSelect(event: any) {
+  onRowSelect(event: TableRowSelectEvent<Province>) {
+    if (!event.data || Array.isArray(event.data)) {
+      console.error('No se ha seleccionado una provincia válida')
+      return
+    }
+
+    const province = event.data as Province
+
     // Seleccionar la provincia en el facade
-    this.provinceFacade.selectProvinceById(event.data.CODPROV)
+    this.provinceFacade.selectProvinceById(province.id)
 
     // Navegar a la página de detalles
-    this.router.navigate(['/details', event.data.CODPROV])
-  }
-
-  onGlobalFilter(event: any) {
-    const value = event.target.value
-    console.log('Filtrando por:', value)
+    this.router.navigate(['/details', province.id])
   }
 }

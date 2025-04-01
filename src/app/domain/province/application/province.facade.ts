@@ -1,5 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core'
 import { ProvinceService } from './province.service'
+import { Province, ProvinceDetail } from '../model/province.model'
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,14 @@ export class ProvinceFacade {
   private provinceService = inject(ProvinceService)
 
   // Estado interno con signals
-  private provinces = signal<any[]>([])
-  private selectedProvince = signal<any>(null)
+  private provinces = signal<Province[]>([])
+  private selectedProvince = signal<ProvinceDetail | null>(null)
   private isLoading = signal<boolean>(false)
 
   // Estado público expuesto como solo lectura
   public provinces$ = this.provinces.asReadonly()
   public selectedProvince$ = this.selectedProvince.asReadonly()
   public isLoading$ = this.isLoading.asReadonly()
-
-  constructor() {}
 
   // Métodos públicos
   loadAllProvinces() {

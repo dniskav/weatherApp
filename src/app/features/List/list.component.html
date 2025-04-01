@@ -21,23 +21,17 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="NOMBRE_PROVINCIA">
-          Provincia <p-sortIcon field="NOMBRE_PROVINCIA"></p-sortIcon>
-        </th>
-        <th pSortableColumn="COMUNIDAD_CIUDAD_AUTONOMA">
-          COMUNIDAD <p-sortIcon field="COMUNIDAD_CIUDAD_AUTONOMA"></p-sortIcon>
-        </th>
-        <th pSortableColumn="CAPITAL_PROVINCIA">
-          Capital <p-sortIcon field="CAPITAL_PROVINCIA"></p-sortIcon>
-        </th>
+        <th pSortableColumn="name">Provincia <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="community">COMUNIDAD <p-sortIcon field="community"></p-sortIcon></th>
+        <th pSortableColumn="capital">Capital <p-sortIcon field="capital"></p-sortIcon></th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-province>
       <tr [pSelectableRow]="province" style="cursor: pointer">
-        <td>{{ province.NOMBRE_PROVINCIA }}</td>
-        <td>{{ province.COMUNIDAD_CIUDAD_AUTONOMA }}</td>
-        <td>{{ province.CAPITAL_PROVINCIA }}</td>
+        <td>{{ province.name }}</td>
+        <td>{{ province.community }}</td>
+        <td>{{ province.capital }}</td>
       </tr>
     </ng-template>
 
