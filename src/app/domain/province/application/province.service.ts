@@ -37,44 +37,4 @@ export class ProvinceService {
       })
     )
   }
-
-  /**
-   * Filtra las provincias por nombre
-   * @param query Texto para filtrar provincias
-   * @returns Un Observable con las provincias filtradas
-   */
-  filterByName(query: string): Observable<Province[]> {
-    if (!query || query.trim() === '') {
-      return this.provinceRepository.findAll()
-    }
-
-    return this.provinceRepository
-      .findAll()
-      .pipe(
-        map((provinces) =>
-          provinces.filter((province) => province.name.toLowerCase().includes(query.toLowerCase()))
-        )
-      )
-  }
-
-  /**
-   * Agrupa las provincias por comunidad autónoma
-   * @returns Un Observable con un mapa de comunidades a provincias
-   */
-  groupByCommunity(): Observable<Map<string, Province[]>> {
-    return this.provinceRepository.findAll().pipe(
-      map((provinces) => {
-        const result = new Map<string, Province[]>()
-
-        provinces.forEach((province) => {
-          if (!result.has(province.community)) {
-            result.set(province.community, [])
-          }
-          result.get(province.community)?.push(province)
-        })
-
-        return result
-      })
-    )
-  }
 }

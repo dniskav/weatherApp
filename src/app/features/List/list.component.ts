@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TableModule, TableRowSelectEvent } from 'primeng/table'
 import { Router } from '@angular/router'
@@ -28,12 +36,30 @@ export class ListComponent implements OnInit {
   // Valores computados
   totalProvinces = computed(() => this.provinces().length)
 
-  ngOnInit(): void {
-    // Actualizar el componente cuando cambien las provincias
-    this.provinces.set(this.provinceFacade.provinces$())
-    this.loading.set(this.provinceFacade.isLoading$())
+  constructor() {
+    // Efecto que reacciona a cambios en las provincias del facade
+    effect(() => {
+      const facadeProvinces = this.provinceFacade.provinces$()
+      this.provinces.set(facadeProvinces)
 
-    // Cargar las provincias
+      // Actualizar el estado de carga cuando tengamos datos
+      if (facadeProvinces.length > 0) {
+        this.loading.set(false)
+      }
+    })
+
+    // Efecto que reacciona al estado de carga del facade
+    effect(() => {
+      const isLoading = this.provinceFacade.isLoading$()
+      // Si ya no está cargando, actualizamos nuestro estado local
+      if (!isLoading) {
+        this.loading.set(false)
+      }
+    })
+  }
+
+  ngOnInit(): void {
+    // Iniciar la carga de provincias
     this.provinceFacade.loadAllProvinces()
   }
 
