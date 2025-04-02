@@ -19,7 +19,7 @@ export class HttpProvinceRepository implements ProvinceRepository {
     return this.http.get<any>(API_URL).pipe(
       map((response) => {
         if (response && response.provincias) {
-          return this.mapToProvinces(response.provincias)
+          return response.provincias
         }
         return []
       }),
@@ -36,7 +36,7 @@ export class HttpProvinceRepository implements ProvinceRepository {
    */
   findById(id: string): Observable<ProvinceDetail> {
     return this.http.get<any>(`${API_URL}/${id}`).pipe(
-      map((response) => this.mapToProvinceDetail(response, id)),
+      map((response) => response),
       catchError((error) => {
         console.error(`Error en la solicitud de provincia ${id}:`, error)
         throw error // Re-lanzamos el error para que el llamador lo maneje
@@ -44,83 +44,83 @@ export class HttpProvinceRepository implements ProvinceRepository {
     )
   }
 
-  /**
-   * Mapea un array de datos de la API a objetos Province
-   */
-  private mapToProvinces(data: any[]): Province[] {
-    return data.map((item) => ({
-      id: item.CODPROV,
-      name: item.NOMBRE_PROVINCIA,
-      community: item.COMUNIDAD_CIUDAD_AUTONOMA,
-      communityId: item.CODAUTON,
-      capital: item.CAPITAL_PROVINCIA
-    }))
-  }
+  // /**
+  //  * Mapea un array de datos de la API a objetos Province
+  //  */
+  // private mapToProvinces(data: any[]): Province[] {
+  //   return data.map((item) => ({
+  //     id: item.CODPROV,
+  //     name: item.NOMBRE_PROVINCIA,
+  //     community: item.COMUNIDAD_CIUDAD_AUTONOMA,
+  //     communityId: item.CODAUTON,
+  //     capital: item.CAPITAL_PROVINCIA
+  //   }))
+  // }
 
-  /**
-   * Mapea un objeto de la API a un objeto ProvinceDetail
-   */
-  private mapToProvinceDetail(data: any, provinceId: string): ProvinceDetail {
-    // Extraer datos básicos de la provincia
-    const provinceData = data.provincia || {}
+  //   /**
+  //    * Mapea un objeto de la API a un objeto ProvinceDetail
+  //    */
+  //   private mapToProvinceDetail(data: any, provinceId: string): ProvinceDetail {
+  //     // Extraer datos básicos de la provincia
+  //     const provinceData = data.provincia || {}
 
-    // Información de la provincia básica
-    const provinceDetail: ProvinceDetail = {
-      id: provinceData.CODPROV || provinceId,
-      name: provinceData.NOMBRE_PROVINCIA || '',
-      communityName: provinceData.COMUNIDAD_CIUDAD_AUTONOMA || '',
-      communityId: provinceData.CODAUTON || '',
-      capital: provinceData.CAPITAL_PROVINCIA || '',
+  //     // Información de la provincia básica
+  //     const provinceDetail: ProvinceDetail = {
+  //       id: provinceData.CODPROV || provinceId,
+  //       name: provinceData.NOMBRE_PROVINCIA || '',
+  //       communityName: provinceData.COMUNIDAD_CIUDAD_AUTONOMA || '',
+  //       communityId: provinceData.CODAUTON || '',
+  //       capital: provinceData.CAPITAL_PROVINCIA || '',
 
-      // Información detallada de la comunidad
-      communityInfo: this.extractCommunityInfo(data),
+  //       // Información detallada de la comunidad
+  //       communityInfo: this.extractCommunityInfo(data),
 
-      // Información meteorológica
-      weather: this.extractWeatherInfo(data),
+  //       // Información meteorológica
+  //       weather: this.extractWeatherInfo(data),
 
-      // Información de pronóstico
-      today: {
-        description: data.today?.p || ''
-      }
-    }
+  //       // Información de pronóstico
+  //       today: {
+  //         description: data.today?.p || ''
+  //       }
+  //     }
 
-    // Agregar pronóstico de mañana si está disponible
-    if (data.tomorrow && data.tomorrow.p) {
-      provinceDetail.tomorrow = {
-        description: data.tomorrow.p
-      }
-    }
+  //     // Agregar pronóstico de mañana si está disponible
+  //     if (data.tomorrow && data.tomorrow.p) {
+  //       provinceDetail.tomorrow = {
+  //         description: data.tomorrow.p
+  //       }
+  //     }
 
-    return provinceDetail
-  }
+  //     return provinceDetail
+  //   }
 
-  /**
-   * Extrae la información de la comunidad autónoma
-   */
-  private extractCommunityInfo(data: any): CommunityInfo {
-    const community = data.comautonoma || {}
-    return {
-      id: community.ID || '',
-      code: community.CODAUTON || '',
-      communeCode: community.CODCOMUN || '',
-      name: community.NOMBRE || ''
-    }
-  }
+  //   /**
+  //    * Extrae la información de la comunidad autónoma
+  //    */
+  //   private extractCommunityInfo(data: any): CommunityInfo {
+  //     const community = data.comautonoma || {}
+  //     return {
+  //       id: community.ID || '',
+  //       code: community.CODAUTON || '',
+  //       communeCode: community.CODCOMUN || '',
+  //       name: community.NOMBRE || ''
+  //     }
+  //   }
 
-  /**
-   * Extrae la información meteorológica
-   */
-  private extractWeatherInfo(data: any): WeatherInfo {
-    return {
-      maxTemperature: data.temperaturas?.max,
-      minTemperature: data.temperaturas?.min,
-      stateDescription: data.stateSky?.description,
-      stateIcon: data.stateSky?.icon,
-      humidity: data.humedad,
-      wind: data.viento,
-      rainfall: data.lluvia,
-      forecast: data.today?.p,
-      elaborationDate: data.elaborado
-    }
-  }
+  //   /**
+  //    * Extrae la información meteorológica
+  //    */
+  //   private extractWeatherInfo(data: any): WeatherInfo {
+  //     return {
+  //       maxTemperature: data.temperaturas?.max,
+  //       minTemperature: data.temperaturas?.min,
+  //       stateDescription: data.stateSky?.description,
+  //       stateIcon: data.stateSky?.icon,
+  //       humidity: data.humedad,
+  //       wind: data.viento,
+  //       rainfall: data.lluvia,
+  //       forecast: data.today?.p,
+  //       elaborationDate: data.elaborado
+  //     }
+  //   }
 }

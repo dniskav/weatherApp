@@ -38,21 +38,17 @@ export class ListComponent implements OnInit {
   totalProvinces = computed(() => this.provinces().length)
 
   constructor() {
-    // Efecto que reacciona a cambios en las provincias del facade
     effect(() => {
       const facadeProvinces = this.provinceFacade.provinces$()
       this.provinces.set(facadeProvinces)
 
-      // Actualizar el estado de carga cuando tengamos datos
       if (facadeProvinces.length > 0) {
         this.loading.set(false)
       }
     })
 
-    // Efecto que reacciona al estado de carga del facade
     effect(() => {
       const isLoading = this.provinceFacade.isLoading$()
-      // Si ya no está cargando, actualizamos nuestro estado local
       if (!isLoading) {
         this.loading.set(false)
       }
@@ -60,7 +56,6 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Iniciar la carga de provincias
     this.provinceFacade.loadAllProvinces()
   }
 
@@ -72,25 +67,13 @@ export class ListComponent implements OnInit {
 
     const province = event.data as Province
 
-    // Seleccionar la provincia en el facade
     this.provinceFacade.selectProvinceById(province.id)
 
-    // Navegar a la página de detalles
     this.router.navigate(['/details', province.id])
   }
 
-  /**
-   * Elimina una provincia del listado local
-   * @param event Evento del click
-   * @param id El ID de la provincia a eliminar
-   */
   deleteProvince(event: Event, id: string): void {
-    // Detener la propagación para evitar que se seleccione la fila
     event.stopPropagation()
-
-    if (confirm(`¿Estás seguro de que deseas eliminar esta provincia?`)) {
-      // Eliminar la provincia del listado local (solo UI)
-      this.provinceFacade.removeProvince(id)
-    }
+    this.provinceFacade.removeProvince(id)
   }
 }

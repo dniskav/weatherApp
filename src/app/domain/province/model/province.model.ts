@@ -3,6 +3,7 @@
  * Basado en la API: https://www.el-tiempo.net/api/json/v2/provincias
  */
 export interface Province {
+  id: string
   CODPROV: string
   NOMBRE_PROVINCIA: string
   CODAUTON: string

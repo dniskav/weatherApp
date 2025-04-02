@@ -30,17 +30,19 @@
 
     <ng-template pTemplate="body" let-province>
       <tr [pSelectableRow]="province" style="cursor: pointer">
-        <td>{{ province.name }}</td>
-        <td>{{ province.community }}</td>
-        <td>{{ province.capital }}</td>
+        <td>{{ province.NOMBRE_PROVINCIA }}</td>
+        <td>{{ province.COMUNIDAD_CIUDAD_AUTONOMA }}</td>
+        <td>{{ province.CAPITAL_PROVINCIA }}</td>
         <td>
           <button
             pButton
             icon="pi pi-trash"
             class="p-button-danger p-button-rounded p-button-text"
-            (click)="deleteProvince($event, province.id)"
+            (click)="deleteProvince($event, province.CODPROV)"
             pTooltip="Eliminar provincia"
-            tooltipPosition="top"></button>
+            tooltipPosition="top">
+            borrar
+          </button>
         </td>
       </tr>
     </ng-template>
