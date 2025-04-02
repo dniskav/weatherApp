@@ -3,11 +3,11 @@
  * Basado en la API: https://www.el-tiempo.net/api/json/v2/provincias
  */
 export interface Province {
-  id: string // CODPROV
-  name: string // NOMBRE_PROVINCIA
-  community: string // COMUNIDAD_CIUDAD_AUTONOMA
-  communityId: string // CODAUTON
-  capital: string // CAPITAL_PROVINCIA
+  CODPROV: string
+  NOMBRE_PROVINCIA: string
+  CODAUTON: string
+  COMUNIDAD_CIUDAD_AUTONOMA: string
+  CAPITAL_PROVINCIA: string
 }
 
 /**
@@ -51,4 +51,28 @@ export interface ProvinceDetail extends Omit<Province, 'community'> {
   tomorrow?: {
     description: string // tomorrow.p
   }
+}
+
+export interface ProvincesResponse {
+  origen: Origen
+  title: string
+  provincias: Province[]
+  metadescripcion: string
+  keywords: string
+  breadcrumb: Breadcrumb[]
+}
+
+export interface Origen {
+  productor: string
+  web: string
+  language: string
+  copyright: string
+  nota_legal: string
+  descripcion: string
+}
+
+export interface Breadcrumb {
+  name: string
+  url: string | null
+  title: string
 }
