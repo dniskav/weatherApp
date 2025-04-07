@@ -39,22 +39,39 @@ export interface WeatherInfo {
 }
 
 /**
+ * ID de un municipio
+ */
+export interface CityId {
+  '0': string
+}
+
+/**
+ * Estado del cielo
+ */
+export interface StateSky {
+  description: string // Descripción del estado del cielo
+  id: string // ID del estado del cielo
+}
+
+/**
+ * Información de temperaturas
+ */
+export interface Temperature {
+  max: string // Temperatura máxima
+  min: string // Temperatura mínima
+}
+
+/**
  * Representa una ciudad/municipio destacado con su información meteorológica
  * Basado en la API: https://www.el-tiempo.net/api/json/v2/provincias/[id]
  */
 export interface City {
-  id: { '0': string } // ID del municipio
+  id: CityId // ID del municipio
   idProvince: string // ID de la provincia
   name: string // Nombre del municipio
   nameProvince: string // Nombre de la provincia
-  stateSky: {
-    description: string // Descripción del estado del cielo
-    id: string // ID del estado del cielo
-  }
-  temperatures: {
-    max: string // Temperatura máxima
-    min: string // Temperatura mínima
-  }
+  stateSky: StateSky
+  temperatures: Temperature
 }
 
 /**
@@ -70,6 +87,13 @@ export interface ProvinciaData {
 }
 
 /**
+ * Información de pronóstico
+ */
+export interface Forecast {
+  description: string // Descripción del pronóstico (today.p o tomorrow.p)
+}
+
+/**
  * Detalles extendidos de una provincia para la vista de detalles
  * Basado en la API: https://www.el-tiempo.net/api/json/v2/provincias/[id]
  */
@@ -78,25 +102,15 @@ export interface ProvinceDetail extends Omit<Province, 'community'> {
   communityName: string // Nombre de la comunidad (del objeto Province original)
   communityInfo: CommunityInfo // Información detallada de la comunidad autónoma
   weather: WeatherInfo
-  today: {
-    description: string // today.p
-  }
-  tomorrow?: {
-    description: string // tomorrow.p
-  }
+  today: Forecast
+  tomorrow?: Forecast
   ciudades?: City[] // Listado de ciudades/municipios destacados
   provincia: ProvinciaData // Datos originales de la provincia según la API
 }
 
-export interface ProvincesResponse {
-  origen: Origen
-  title: string
-  provincias: Province[]
-  metadescripcion: string
-  keywords: string
-  breadcrumb: Breadcrumb[]
-}
-
+/**
+ * Información del origen de los datos
+ */
 export interface Origen {
   productor: string
   web: string
@@ -106,8 +120,23 @@ export interface Origen {
   descripcion: string
 }
 
+/**
+ * Estructura de navegación (miga de pan)
+ */
 export interface Breadcrumb {
   name: string
   url: string | null
   title: string
+}
+
+/**
+ * Respuesta completa del listado de provincias
+ */
+export interface ProvincesResponse {
+  origen: Origen
+  title: string
+  provincias: Province[]
+  metadescripcion: string
+  keywords: string
+  breadcrumb: Breadcrumb[]
 }
