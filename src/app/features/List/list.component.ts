@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common'
 import { TableModule, TableRowSelectEvent } from 'primeng/table'
 import { Router } from '@angular/router'
 import { ButtonModule } from 'primeng/button'
+import { PanelModule } from 'primeng/panel'
 import { InputTextModule } from 'primeng/inputtext'
 import { RippleModule } from 'primeng/ripple'
 import { TooltipModule } from 'primeng/tooltip'
@@ -20,7 +21,15 @@ import { Province } from '../../domain/province/model/province.model'
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, RippleModule, TooltipModule],
+  imports: [
+    CommonModule,
+    PanelModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    RippleModule,
+    TooltipModule
+  ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -67,9 +76,9 @@ export class ListComponent implements OnInit {
 
     const province = event.data as Province
 
-    this.provinceFacade.selectProvinceById(province.id)
+    this.provinceFacade.selectProvinceById(province.CODPROV)
 
-    this.router.navigate(['/details', province.id])
+    this.router.navigate(['/details', province.CODPROV])
   }
 
   deleteProvince(event: Event, id: string): void {

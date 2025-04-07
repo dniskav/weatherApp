@@ -1,6 +1,92 @@
 <div class="details-container">
-  <h2>Weather Details</h2>
-  <div class="details-content">
-    <!-- Details content will go here -->
-  </div>
+  <p-panel [header]="province()?.title || 'Detalles de la provincia'" styleClass="mb-4">
+    <div class="grid">
+      <div class="col-12 sm:col-6 md:col-4">
+        <p-card header="Información del tiempo" styleClass="weather-card">
+          <div class="weather-content text-center">
+            <!-- Icono del tiempo basado en la temperatura mínima -->
+            <img
+              [src]="getTemperatureIcon(province()?.weather?.minTemperature)"
+              [alt]="province()?.weather?.stateDescription || 'Tiempo'"
+              class="weather-icon mb-3" />
+
+            <!-- Estado del cielo -->
+            <p class="text-lg mb-3">{{ province()?.weather?.stateDescription }}</p>
+
+            <!-- Temperaturas -->
+            <div class="temperatures grid">
+              <div class="col-6">
+                <small class="block text-500">MAX</small>
+                <span class="text-xl font-medium">{{ province()?.weather?.maxTemperature }}°C</span>
+              </div>
+              <div class="col-6">
+                <small class="block text-500">MIN</small>
+                <span class="text-xl font-medium">{{ province()?.weather?.minTemperature }}°C</span>
+              </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="additional-info mt-4 text-left">
+              <p><i class="pi pi-cloud mr-2"></i>Humedad: {{ province()?.weather?.humidity }}%</p>
+              <p><i class="pi pi-arrow-right mr-2"></i>Viento: {{ province()?.weather?.wind }}</p>
+              <p>
+                <i class="pi pi-info-circle mr-2"></i>Lluvia: {{ province()?.weather?.rainfall }}%
+              </p>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 sm:col-6 md:col-8">
+        <p-card header="Pronóstico" styleClass="weather-card">
+          <div class="forecast-content">
+            <h3 class="text-xl mb-3">Hoy</h3>
+            <p class="mb-4">{{ province()?.today?.description }}</p>
+
+            <h3 class="text-xl mb-3">Mañana</h3>
+            <p>{{ province()?.tomorrow?.description }}</p>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <!-- Municipios destacados -->
+    <div class="mt-4" *ngIf="province()?.ciudades?.length">
+      <h2 class="text-xl font-medium mb-3">
+        MUNICIPIOS DESTACADOS DE {{ province()?.provincia?.NOMBRE_PROVINCIA }}
+      </h2>
+      <div class="grid">
+        <div
+          *ngFor="let ciudad of province()?.ciudades"
+          class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <p-card [header]="ciudad.name" styleClass="weather-card city-card">
+            <div class="city-content text-center">
+              <!-- Icono según temperatura mínima -->
+              <img
+                [src]="getTemperatureIcon(parseTemp(ciudad.temperatures.min))"
+                [alt]="ciudad.stateSky.description"
+                class="weather-icon mb-2" />
+
+              <!-- Estado del cielo -->
+              <p class="mb-2">{{ ciudad.stateSky.description }}</p>
+
+              <!-- Temperaturas -->
+              <div class="city-temperatures">
+                <div class="flex justify-content-center">
+                  <div class="mr-3">
+                    <small class="block text-500">MAX:</small>
+                    <span class="font-medium">{{ ciudad.temperatures.max }}°C</span>
+                  </div>
+                  <div>
+                    <small class="block text-500">MIN:</small>
+                    <span class="font-medium">{{ ciudad.temperatures.min }}°C</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  </p-panel>
 </div>

@@ -39,10 +39,42 @@ export interface WeatherInfo {
 }
 
 /**
+ * Representa una ciudad/municipio destacado con su información meteorológica
+ * Basado en la API: https://www.el-tiempo.net/api/json/v2/provincias/[id]
+ */
+export interface City {
+  id: { '0': string } // ID del municipio
+  idProvince: string // ID de la provincia
+  name: string // Nombre del municipio
+  nameProvince: string // Nombre de la provincia
+  stateSky: {
+    description: string // Descripción del estado del cielo
+    id: string // ID del estado del cielo
+  }
+  temperatures: {
+    max: string // Temperatura máxima
+    min: string // Temperatura mínima
+  }
+}
+
+/**
+ * Datos de provincia según formato de la API
+ * Basado en la respuesta original del endpoint provincia
+ */
+export interface ProvinciaData {
+  CODPROV: string
+  NOMBRE_PROVINCIA: string
+  CODAUTON: string
+  COMUNIDAD_CIUDAD_AUTONOMA: string
+  CAPITAL_PROVINCIA: string
+}
+
+/**
  * Detalles extendidos de una provincia para la vista de detalles
  * Basado en la API: https://www.el-tiempo.net/api/json/v2/provincias/[id]
  */
 export interface ProvinceDetail extends Omit<Province, 'community'> {
+  title: string // Título descriptivo de la provincia (ej: "El tiempo en la provincia de Salamanca")
   communityName: string // Nombre de la comunidad (del objeto Province original)
   communityInfo: CommunityInfo // Información detallada de la comunidad autónoma
   weather: WeatherInfo
@@ -52,6 +84,8 @@ export interface ProvinceDetail extends Omit<Province, 'community'> {
   tomorrow?: {
     description: string // tomorrow.p
   }
+  ciudades?: City[] // Listado de ciudades/municipios destacados
+  provincia: ProvinciaData // Datos originales de la provincia según la API
 }
 
 export interface ProvincesResponse {

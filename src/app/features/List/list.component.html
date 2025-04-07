@@ -1,51 +1,51 @@
 <div class="list-container">
-  <h2>Provincias de España</h2>
+  <p-panel header="Provincias de España">
+    <p-table
+      [value]="provinces()"
+      styleClass="p-datatable-sm p-datatable-gridlines"
+      [scrollable]="true"
+      scrollHeight="400px"
+      selectionMode="single"
+      (onRowSelect)="onRowSelect($event)"
+      [loading]="loading()">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="NOMBRE_PROVINCIA">
+            Provincia <p-sortIcon field="NOMBRE_PROVINCIA"></p-sortIcon>
+          </th>
+          <th pSortableColumn="COMUNIDAD_CIUDAD_AUTONOMA">
+            COMUNIDAD <p-sortIcon field="COMUNIDAD_CIUDAD_AUTONOMA"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CAPITAL_PROVINCIA">
+            Capital <p-sortIcon field="CAPITAL_PROVINCIA"></p-sortIcon>
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
 
-  <p-table
-    [value]="provinces()"
-    styleClass="p-datatable-sm p-datatable-gridlines"
-    [scrollable]="true"
-    scrollHeight="400px"
-    selectionMode="single"
-    (onRowSelect)="onRowSelect($event)"
-    [loading]="loading()">
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="NOMBRE_PROVINCIA">
-          Provincia <p-sortIcon field="NOMBRE_PROVINCIA"></p-sortIcon>
-        </th>
-        <th pSortableColumn="COMUNIDAD_CIUDAD_AUTONOMA">
-          COMUNIDAD <p-sortIcon field="COMUNIDAD_CIUDAD_AUTONOMA"></p-sortIcon>
-        </th>
-        <th pSortableColumn="CAPITAL_PROVINCIA">
-          Capital <p-sortIcon field="CAPITAL_PROVINCIA"></p-sortIcon>
-        </th>
-        <th>Acciones</th>
-      </tr>
-    </ng-template>
+      <ng-template pTemplate="body" let-province>
+        <tr [pSelectableRow]="province" style="cursor: pointer">
+          <td>{{ province.NOMBRE_PROVINCIA }}</td>
+          <td>{{ province.COMUNIDAD_CIUDAD_AUTONOMA }}</td>
+          <td>{{ province.CAPITAL_PROVINCIA }}</td>
+          <td>
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded p-button-text"
+              (click)="deleteProvince($event, province.CODPROV)"
+              tooltipPosition="top">
+              borrar
+            </button>
+          </td>
+        </tr>
+      </ng-template>
 
-    <ng-template pTemplate="body" let-province>
-      <tr style="cursor: pointer">
-        <td>{{ province.NOMBRE_PROVINCIA }}</td>
-        <td>{{ province.COMUNIDAD_CIUDAD_AUTONOMA }}</td>
-        <td>{{ province.CAPITAL_PROVINCIA }}</td>
-        <td>
-          <button
-            pButton
-            icon="pi pi-trash"
-            class="p-button-danger p-button-rounded p-button-text"
-            (click)="deleteProvince($event, province.CODPROV)"
-            tooltipPosition="top">
-            borrar
-          </button>
-        </td>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="4" style="text-align: center">No se encontraron provincias.</td>
-      </tr>
-    </ng-template>
-  </p-table>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" style="text-align: center">No se encontraron provincias.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
 </div>

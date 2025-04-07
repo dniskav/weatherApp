@@ -1,0 +1,151 @@
+.details-container {
+  padding: 1rem;
+
+  .weather-card {
+    height: 100%;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    background-color: var(--surface-card) !important;
+    box-shadow:
+      0 2px 1px -1px rgba(0, 0, 0, 0.2),
+      0 1px 1px 0 rgba(0, 0, 0, 0.14),
+      0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+    border-radius: 12px;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .weather-content {
+      padding: 1rem;
+
+      .weather-icon {
+        height: 24px;
+        object-fit: contain;
+        margin-bottom: 0.5rem;
+      }
+
+      i {
+        margin-bottom: 1rem;
+
+        &.pi-sun {
+          color: #f59e0b;
+        }
+
+        &.pi-cloud {
+          color: #60a5fa;
+        }
+
+        &.pi-bolt {
+          color: #fbbf24;
+        }
+      }
+
+      .temperatures {
+        margin-top: 1rem;
+        text-align: center;
+
+        .text-500 {
+          color: var(--text-color-secondary);
+        }
+      }
+
+      .additional-info {
+        p {
+          margin: 0.5rem 0;
+          display: flex;
+          align-items: center;
+
+          i {
+            margin: 0 0.5rem 0 0;
+            font-size: 1rem;
+            color: var(--text-color-secondary);
+          }
+        }
+      }
+    }
+  }
+
+  .city-card {
+    margin-bottom: 1rem;
+
+    .city-content {
+      padding: 0.5rem;
+
+      .weather-icon {
+        height: 24px;
+        margin: 0 auto 0.5rem;
+      }
+
+      .city-temperatures {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+
+        .text-500 {
+          font-size: 0.75rem;
+          color: var(--text-color-secondary);
+        }
+      }
+    }
+  }
+
+  .forecast-content {
+    h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .p-panel {
+    .p-panel-header {
+      background: var(--surface-card) !important;
+      color: var(--primary-color) !important;
+      font-weight: 600 !important;
+      padding: 1rem !important;
+      border-radius: 12px 12px 0 0 !important;
+    }
+
+    .p-panel-content {
+      background: var(--surface-ground) !important;
+      padding: 1rem !important;
+      border-radius: 0 0 12px 12px !important;
+    }
+  }
+
+  .p-card {
+    .p-card-header {
+      padding: 1rem !important;
+      border-bottom: 1px solid var(--surface-border) !important;
+      font-weight: 600 !important;
+      color: var(--primary-color) !important;
+    }
+
+    .p-card-content {
+      padding: 1rem !important;
+    }
+  }
+
+  .city-card {
+    .p-card-header {
+      padding: 0.75rem !important;
+      font-size: 0.9rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .p-card-content {
+      padding: 0.5rem !important;
+    }
+  }
+}
